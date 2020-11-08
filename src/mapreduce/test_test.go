@@ -141,7 +141,7 @@ func TestBasic(t *testing.T) {
 			MapFunc, ReduceFunc, -1)
 	}
 	// Wait until MR is done
-	<-mr.DoneChannel
+	<-mr.doneChannel
 	check(t, mr.file)
 	checkWorker(t, mr.stats)
 	cleanup(mr)
@@ -157,7 +157,7 @@ func TestOneFailure(t *testing.T) {
 	go RunWorker(mr.MasterAddress, port("worker"+strconv.Itoa(1)),
 		MapFunc, ReduceFunc, -1)
 	// Wait until MR is done
-	<-mr.DoneChannel
+	<-mr.doneChannel
 	check(t, mr.file)
 	checkWorker(t, mr.stats)
 	cleanup(mr)
@@ -171,7 +171,7 @@ func TestManyFailures(t *testing.T) {
 	done := false
 	for !done {
 		select {
-		case done = <-mr.DoneChannel:
+		case done = <-mr.doneChannel:
 			check(t, mr.file)
 			cleanup(mr)
 			break

@@ -55,7 +55,7 @@ type MapReduce struct {
 	file            string // Name of input file
 	MasterAddress   string
 	registerChannel chan string
-	DoneChannel     chan bool
+	doneChannel     chan bool
 	alive           bool
 	l               net.Listener
 	stats           *list.List
@@ -75,7 +75,7 @@ func InitMapReduce(nmap int, nreduce int,
 	mr.MasterAddress = master
 	mr.alive = true
 	mr.registerChannel = make(chan string)
-	mr.DoneChannel = make(chan bool)
+	mr.doneChannel = make(chan bool)
 
 	// initialize any additional state here
 	return mr
@@ -376,5 +376,5 @@ func (mr *MapReduce) Run() {
 
 	fmt.Printf("%s: MapReduce done\n", mr.MasterAddress)
 
-	mr.DoneChannel <- true
+	mr.doneChannel <- true
 }
